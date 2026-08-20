@@ -1,0 +1,161 @@
+﻿[gd_scene load_steps=22 format=3 uid="uid://df8m8deafchar1"]
+
+[ext_resource type="Script" path="res://scripts/deaf_character.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://ueutfr5ncux3" path="res://assets/deaf.png" id="2_deaf"]
+[ext_resource type="Texture2D" uid="uid://bq5wr3vtye61e" path="res://assets/pixil-frame-0 (99).png" id="3_drop_l"]
+[ext_resource type="Texture2D" uid="uid://cggejdt8f1sfk" path="res://assets/pixil-frame-0 (2).png" id="4_drop_r"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_l1"]
+atlas = ExtResource("2_deaf")
+region = Rect2(0, 0, 272, 541)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_l2"]
+atlas = ExtResource("2_deaf")
+region = Rect2(272, 0, 272, 541)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_l3"]
+atlas = ExtResource("2_deaf")
+region = Rect2(544, 0, 272, 541)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_l4"]
+atlas = ExtResource("2_deaf")
+region = Rect2(816, 0, 272, 541)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_r1"]
+atlas = ExtResource("2_deaf")
+region = Rect2(0, 0, 272, 541)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_r2"]
+atlas = ExtResource("2_deaf")
+region = Rect2(272, 0, 272, 541)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_r3"]
+atlas = ExtResource("2_deaf")
+region = Rect2(544, 0, 272, 541)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_r4"]
+atlas = ExtResource("2_deaf")
+region = Rect2(816, 0, 272, 541)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run_l1"]
+atlas = ExtResource("2_deaf")
+region = Rect2(544, 541, 272, 541)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run_l2"]
+atlas = ExtResource("2_deaf")
+region = Rect2(0, 1082, 272, 541)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run_l3"]
+atlas = ExtResource("2_deaf")
+region = Rect2(1088, 541, 272, 541)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run_l4"]
+atlas = ExtResource("2_deaf")
+region = Rect2(544, 1082, 272, 541)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run_r1"]
+atlas = ExtResource("2_deaf")
+region = Rect2(1360, 541, 272, 541)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run_r2"]
+atlas = ExtResource("2_deaf")
+region = Rect2(272, 1082, 272, 541)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run_r3"]
+atlas = ExtResource("2_deaf")
+region = Rect2(816, 541, 272, 541)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run_r4"]
+atlas = ExtResource("2_deaf")
+region = Rect2(816, 1082, 272, 541)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_deaf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_l1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_l2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_l3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_l4")
+}],
+"loop": true,
+"name": &"idle left",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_r1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_r2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_r3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_r4")
+}],
+"loop": true,
+"name": &"idle right",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_run_l1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_run_l2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_run_l3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_run_l4")
+}],
+"loop": true,
+"name": &"run left",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_run_r1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_run_r2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_run_r3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_run_r4")
+}],
+"loop": true,
+"name": &"run right",
+"speed": 8.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
+radius = 14.0
+height = 36.0
+
+[node name="DeafCharacter" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_script")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -6)
+scale = Vector2(0.12, 0.12)
+sprite_frames = SubResource("SpriteFrames_deaf")
+animation = &"idle right"
+autoplay = "idle right"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 10)
+shape = SubResource("CapsuleShape2D_body")

@@ -1,0 +1,23 @@
+﻿[gd_scene load_steps=7 format=3 uid="uid://bgamscenemain1"]
+
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/level_loader.gd" id="2_loader"]
+[ext_resource type="PackedScene" uid="uid://bgamehudscene1" path="res://scenes/ui/hud.tscn" id="3_hud"]
+[ext_resource type="PackedScene" uid="uid://bgampausemenu1" path="res://scenes/ui/pause_menu.tscn" id="4_pause"]
+[ext_resource type="PackedScene" uid="uid://bgamovrpopup1" path="res://scenes/ui/game_over_popup.tscn" id="5_over"]
+
+[node name="GameScene" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="LevelLoader" type="Node2D" parent="."]
+script = ExtResource("2_loader")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+
+[node name="HUD" parent="." instance=ExtResource("3_hud")]
+
+[node name="PauseMenu" parent="." instance=ExtResource("4_pause")]
+
+[node name="GameOverPopup" parent="." instance=ExtResource("5_over")]
