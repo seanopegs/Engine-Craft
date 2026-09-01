@@ -1,4 +1,4 @@
-﻿extends Area2D
+extends Area2D
 class_name LaserTrap
 
 @export var is_active: bool = true
@@ -20,6 +20,10 @@ func illuminate_by_sonar() -> void:
 	sonar_visibility = 1.0
 
 func _draw() -> void:
+	# Objects are visible only to the Deaf character.
+	# Blind character cannot visually see objects.
+	if AudioManager and not AudioManager.is_deaf_mode:
+		return
 	var alpha: float = 0.9
 	if AudioManager and not AudioManager.is_deaf_mode:
 		# If in blind mode, only visible through sonar illumination

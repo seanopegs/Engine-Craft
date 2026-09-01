@@ -1,4 +1,4 @@
-﻿extends Area2D
+extends Area2D
 class_name KeyItem
 
 enum KeyType { RED, SOUND, BLUE }
@@ -45,6 +45,10 @@ func _process(delta: float) -> void:
 	queue_redraw()
 
 func _draw() -> void:
+	# Objects are visible only to the Deaf character.
+	# Blind character cannot visually see objects.
+	if AudioManager and not AudioManager.is_deaf_mode:
+		return
 	var col = key_colors[key_type]
 	var offset_y = sin(hover_timer) * 4.0
 	

@@ -1,4 +1,4 @@
-﻿extends StaticBody2D
+extends StaticBody2D
 class_name MazeDoor
 
 enum DoorType { RED, SOUND, BLUE, GATE }
@@ -32,6 +32,10 @@ func _process(delta: float) -> void:
 	queue_redraw()
 
 func _draw() -> void:
+	# Objects are visible only to the Deaf character.
+	# Blind character cannot visually see objects.
+	if AudioManager and not AudioManager.is_deaf_mode:
+		return
 	if is_open:
 		# Draw faint open threshold
 		var base_col = door_colors[door_type]

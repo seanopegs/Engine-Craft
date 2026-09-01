@@ -1,4 +1,4 @@
-﻿extends Area2D
+extends Area2D
 class_name ExitPortal
 
 var spin_timer: float = 0.0
@@ -12,6 +12,10 @@ func _process(delta: float) -> void:
 	queue_redraw()
 
 func _draw() -> void:
+	# Objects are visible only to the Deaf character.
+	# Blind character cannot visually see objects.
+	if AudioManager and not AudioManager.is_deaf_mode:
+		return
 	var pulse = (sin(spin_timer * 2.0) + 1.0) * 0.2 + 0.8
 	var portal_col = Color(0.2, 0.95, 0.5, 0.8 * pulse)
 	

@@ -1,4 +1,4 @@
-﻿extends CharacterBase
+extends CharacterBase
 class_name BlindCharacter
 
 # Blind Character (Kuro): Can hear sound, uses Echolocation sonar pulses
@@ -21,9 +21,6 @@ func _process(delta: float) -> void:
 	for i in range(sonar_pulses.size() - 1, -1, -1):
 		sonar_pulses[i]["radius"] += delta * 320.0
 		sonar_pulses[i]["alpha"] -= delta * 0.75
-		
-		# Illuminate traps / objects in radius
-		_illuminate_nearby(sonar_pulses[i]["radius"])
 		
 		if sonar_pulses[i]["alpha"] <= 0 or sonar_pulses[i]["radius"] > 450.0:
 			sonar_pulses.remove_at(i)
@@ -55,25 +52,5 @@ func is_pulsing() -> bool:
 	return is_currently_pulsing
 
 func _illuminate_nearby(current_radius: float) -> void:
-	var traps = get_tree().get_nodes_in_group("hazards")
-	for t in traps:
-		if global_position.distance_to(t.global_position) <= current_radius + 40.0:
-			if t.has_method("illuminate_by_sonar"):
-				t.illuminate_by_sonar()
-
-func _draw() -> void:
-	# Active indicator aura
-	if is_active_character:
-		draw_arc(Vector2(0, 15), 24.0, 0, TAU, 32, Color(0.2, 0.85, 1.0, 0.7), 2.0)
-		draw_circle(Vector2(0, 15), 24.0, Color(0.1, 0.7, 1.0, 0.15))
-		
-		# Draw Sonar Waves expanding from player
-		for p in sonar_pulses:
-			var col = Color(0.2, 0.85, 1.0, p["alpha"] * 0.8) if p["strong"] else Color(0.4, 0.9, 1.0, p["alpha"] * 0.4)
-			var width = 3.0 if p["strong"] else 1.5
-			draw_arc(Vector2(0, 10), p["radius"], 0, TAU, 36, col, width)
-			# Outer faint ring
-			if p["strong"]:
-				draw_arc(Vector2(0, 10), p["radius"] * 0.92, 0, TAU, 36, Color(col.r, col.g, col.b, col.a * 0.3), 1.0)
-	else:
-		draw_arc(Vector2(0, 15), 20.0, 0, TAU, 24, Color(0.6, 0.6, 0.6, 0.4), 1.5)
+	# Blind character's sonar is audio-only. Objects remain visually hidden.
+	pass

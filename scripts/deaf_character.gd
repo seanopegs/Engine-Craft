@@ -1,7 +1,7 @@
-﻿extends CharacterBase
+extends CharacterBase
 class_name DeafCharacter
 
-# Deaf Character (Shiro): Full sight, sees all visual traps, color doors
+# Deaf Character (Shiro): Sees objects, but cannot see entities such as monsters.
 # Cannot hear audio/sonar cues
 
 func _ready() -> void:

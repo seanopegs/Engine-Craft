@@ -1,4 +1,4 @@
-﻿extends Area2D
+extends Area2D
 class_name PressurePlate
 
 var is_pressed: bool = false
@@ -12,6 +12,10 @@ func _ready() -> void:
 	body_exited.connect(_on_body_exited)
 
 func _draw() -> void:
+	# Objects are visible only to the Deaf character.
+	# Blind character cannot visually see objects.
+	if AudioManager and not AudioManager.is_deaf_mode:
+		return
 	var bg_col = Color(0.2, 0.2, 0.25, 1.0)
 	var plate_col = Color(0.3, 0.8, 0.3, 1.0) if is_pressed else Color(0.85, 0.7, 0.2, 1.0)
 	var size = 44.0 if not is_pressed else 40.0

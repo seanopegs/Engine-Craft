@@ -1,4 +1,4 @@
-﻿extends CharacterBody2D
+extends CharacterBody2D
 class_name MazeMonster
 
 enum State { PATROL, CHASE, SEARCH }
@@ -116,7 +116,12 @@ func _catch_player() -> void:
 		game_mgr.player_died("Tertangkap oleh Monster Pemburu!")
 
 func _draw() -> void:
-	var is_blind_view = (AudioManager and not AudioManager.is_deaf_mode)
+	# Deaf character cannot visually see entities (the monster).
+	# Blind character can see entities normally.
+	if AudioManager and AudioManager.is_deaf_mode:
+		return
+
+	var is_blind_view = true
 	
 	# Draw sound ripples (Visible to Blind / Sound user)
 	if is_blind_view:
