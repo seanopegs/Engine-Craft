@@ -7,7 +7,7 @@ class_name GameManager
 @onready var pause_menu: PauseMenu = $PauseMenu
 @onready var game_over_popup: GameOverPopup = $GameOverPopup
 var theme_song: AudioStreamPlayer
-var theme_song_stream: AudioStream = preload("res://assets/Engine Craft Theme Song.mp3")
+var theme_song_stream: AudioStream
 
 var is_blind_active: bool = true
 var switch_cooldown_timer: float = 0.0
@@ -31,6 +31,7 @@ func _ready() -> void:
 	# Create the level theme player once. It is restarted whenever a level starts.
 	theme_song = AudioStreamPlayer.new()
 	theme_song.name = "EngineCraftTheme"
+	theme_song_stream = load("res://assets/Engine Craft Theme Song.mp3")
 	theme_song.stream = theme_song_stream
 	theme_song.bus = "Master"
 	add_child(theme_song)
@@ -38,6 +39,13 @@ func _ready() -> void:
 		theme_song.stream.loop = true
 
 	start_level(Global.current_level_index)
+
+func _exit_tree() -> void:
+	if is_instance_valid(theme_song):
+		theme_song.stop()
+		theme_song.stream = null
+		theme_song.queue_free()
+	theme_song_stream = null
 
 func start_level(level_idx: int) -> void:
 	get_tree().paused = false
@@ -81,18 +89,18 @@ func _process(delta: float) -> void:
 	if hud:
 		hud.update_hud(is_blind_active, switch_cooldown_timer, max_switch_cooldown, Global.is_follow_active, Global.current_level_index)
 
-func _handle_input() -> void:
-	# Pause
-	if Input.is_action_just_pressed("pause") or Input.is_key_pressed(KEY_ESCAPE):
+func _unhandled_input(event: InputEvent) -> void:
+	if is_level_active and not get_tree().paused and event.is_action_pressed("pause") and not event.is_echo():
 		_toggle_pause()
-		return
-		
+		get_viewport().set_input_as_handled()
+
+func _handle_input() -> void:
 	# Switch Character
-	if (Input.is_action_just_pressed("switch_char") or Input.is_key_pressed(KEY_TAB) or Input.is_key_pressed(KEY_Q)) and switch_cooldown_timer <= 0:
+	if Input.is_action_just_pressed("switch_char") and switch_cooldown_timer <= 0:
 		switch_character()
 		
 	# Toggle Follow Mode
-	if Input.is_action_just_pressed("toggle_follow") or Input.is_key_pressed(KEY_F):
+	if Input.is_action_just_pressed("toggle_follow"):
 		Global.is_follow_active = not Global.is_follow_active
 		if AudioManager:
 			AudioManager.play_plate_click()

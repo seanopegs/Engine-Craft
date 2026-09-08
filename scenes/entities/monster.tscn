@@ -1,4 +1,4 @@
-﻿[gd_scene load_steps=3 format=3 uid="uid://bmnstrentity1"]
+[gd_scene load_steps=3 format=3 uid="uid://bmnstrentity1"]
 
 [ext_resource type="Script" path="res://scripts/monster.gd" id="1_script"]
 

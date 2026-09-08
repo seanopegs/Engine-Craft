@@ -199,8 +199,8 @@ func load_level_from_file(file_path: String) -> bool:
 
 func _draw() -> void:
 	# Draw Floor Tiles
-	var floor_bg_col = Color(0.08, 0.09, 0.12, 1.0)
-	var floor_grid_col = Color(0.13, 0.15, 0.2, 0.5)
+	var floor_bg_col = Color("0b151e")
+	var floor_grid_col = Color(0.15, 0.26, 0.30, 0.22)
 	
 	for pos in floor_cells:
 		var r = Rect2(pos.x * cell_size, pos.y * cell_size, cell_size, cell_size)
@@ -208,13 +208,17 @@ func _draw() -> void:
 		draw_rect(r, floor_grid_col, false, 1.0)
 		
 	# Draw Wall Tiles
-	var wall_base_col = Color(0.14, 0.16, 0.22, 1.0)
-	var wall_top_col = Color(0.2, 0.24, 0.32, 1.0)
-	var wall_edge_col = Color(0.3, 0.38, 0.52, 0.8)
+	var wall_base_col = Color("111d28")
+	var wall_top_col = Color("213340")
+	var wall_edge_col = Color("354d59")
 	
 	for pos in wall_cells.keys():
 		var r = Rect2(pos.x * cell_size, pos.y * cell_size, cell_size, cell_size)
 		# 3D shadow bevel
 		draw_rect(r, wall_base_col, true)
-		draw_rect(Rect2(r.position.x + 2, r.position.y + 2, cell_size - 4, cell_size - 4), wall_top_col, true)
-		draw_rect(r, wall_edge_col, false, 1.5)
+		draw_rect(Rect2(r.position.x + 3, r.position.y + 3, cell_size - 6, cell_size - 9), wall_top_col, true)
+		draw_line(r.position + Vector2(3, 3), r.position + Vector2(cell_size - 3, 3), wall_edge_col, 2.0)
+		draw_line(r.position + Vector2(3, 3), r.position + Vector2(3, cell_size - 6), wall_edge_col, 1.0)
+		if (pos.x + pos.y * 3) % 7 == 0:
+			draw_rect(Rect2(r.position + Vector2(9, 8), Vector2(12, 2)), Color("537777"))
+			draw_circle(r.position + Vector2(cell_size - 10, cell_size - 13), 1.5, wall_edge_col)

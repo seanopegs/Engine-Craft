@@ -1,4 +1,4 @@
-﻿[gd_scene load_steps=7 format=3 uid="uid://bgamscenemain1"]
+[gd_scene load_steps=7 format=3 uid="uid://bgamscenemain1"]
 
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_script"]
 [ext_resource type="Script" path="res://scripts/level_loader.gd" id="2_loader"]
