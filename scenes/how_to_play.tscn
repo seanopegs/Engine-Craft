@@ -80,10 +80,9 @@ text = "1. Karakter Buta (Blind / Echo - Cyan)"
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 1)
 theme_override_font_sizes/font_size = 14
-text = "• Layar dalam kegelapan pekat.
-• Tekan [SPACE] atau [E] untuk memancarkan gelombang Sonar (Echolocation).
-• Sonar menerangi dinding, pintu suara [S], dan mendeteksi detak jantung Monster [M] menembus dinding!
-• Kunci Suara [S] dan Pintu Akustik [s] hanya bisa dideteksi dengan sonar."
+text = "• Tidak bisa melihat, pendengaran sangat ampuh.
+• Bisa mengetahui lokasi monster dengan mendengar suara monster (lokasi monster ditampilkan secara visual).
+• Buta: Tidak bisa melihat laser trap, kunci, dan pintu."
 autowrap_mode = 2
 
 [node name="Section2Title" type="Label" parent="CenterContainer/Panel/ScrollContainer/Margin/VBox"]
@@ -96,9 +95,9 @@ text = "2. Karakter Tuli (Deaf / Sight - Kuning)"
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 1)
 theme_override_font_sizes/font_size = 14
-text = "• Layar terang penuh, bisa melihat seluruh labirin, warna pintu, dan Laser Trap [L].
-• Tuli: Tidak bisa mendengar suara monster di balik tembok (waspada saat berbelok di tikungan!).
-• Bisa mengambil Kunci Warna [R/K] dan membuka Pintu Warna [r/k]."
+text = "• Tidak bisa mendengar, tetapi bisa lihat keseluruhan lingkungan dan item.
+• Layar terang penuh, bisa melihat kunci, pintu, dan laser trap.
+• Tuli: Tidak bisa mengetahui lokasi monster karena tidak mendengar suara monster, monster INVISIBLE sehingga visual lokasi monster hanya bisa dilihat oleh Buta."
 autowrap_mode = 2
 
 [node name="Section3Title" type="Label" parent="CenterContainer/Panel/ScrollContainer/Margin/VBox"]

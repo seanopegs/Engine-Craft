@@ -1,4 +1,4 @@
-﻿[gd_scene load_steps=22 format=3 uid="uid://c8m8blndchar1"]
+[gd_scene load_steps=22 format=3 uid="uid://c8m8blndchar1"]
 
 [ext_resource type="Script" path="res://scripts/blind_character.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://brke8xluch2t2" path="res://assets/blind.png" id="2_blind"]
@@ -146,7 +146,7 @@ height = 36.0
 
 [node name="BlindCharacter" type="CharacterBody2D"]
 collision_layer = 2
-collision_mask = 3
+collision_mask = 5
 script = ExtResource("1_script")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

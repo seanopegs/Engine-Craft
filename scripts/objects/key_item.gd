@@ -18,8 +18,6 @@ var key_names = {
 }
 
 var hover_timer: float = 0.0
-var sound_ping_timer: float = 0.0
-var sound_ripples: Array[Dictionary] = []
 
 func _ready() -> void:
 	add_to_group("keys")
@@ -27,21 +25,6 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	hover_timer += delta * 4.0
-	
-	if key_type == KeyType.SOUND:
-		sound_ping_timer += delta
-		if sound_ping_timer >= 2.0:
-			sound_ping_timer = 0.0
-			sound_ripples.append({"radius": 5.0, "alpha": 1.0})
-			if AudioManager and not AudioManager.is_deaf_mode:
-				AudioManager.play_sonar_ping(true)
-				
-		for i in range(sound_ripples.size() - 1, -1, -1):
-			sound_ripples[i]["radius"] += delta * 50.0
-			sound_ripples[i]["alpha"] -= delta * 0.8
-			if sound_ripples[i]["alpha"] <= 0:
-				sound_ripples.remove_at(i)
-				
 	queue_redraw()
 
 func _draw() -> void:
@@ -52,11 +35,6 @@ func _draw() -> void:
 	var col = key_colors[key_type]
 	var offset_y = sin(hover_timer) * 4.0
 	
-	# Draw ripples for sound key
-	if key_type == KeyType.SOUND:
-		for r in sound_ripples:
-			var ripple_col = Color(col.r, col.g, col.b, r["alpha"] * 0.6)
-			draw_arc(Vector2(0, offset_y), r["radius"], 0, TAU, 24, ripple_col, 2.0)
 	
 	# Glow halo
 	draw_circle(Vector2(0, offset_y), 18.0, Color(col.r, col.g, col.b, 0.25))

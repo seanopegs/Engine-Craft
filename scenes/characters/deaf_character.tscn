@@ -1,4 +1,4 @@
-﻿[gd_scene load_steps=22 format=3 uid="uid://df8m8deafchar1"]
+[gd_scene load_steps=22 format=3 uid="uid://df8m8deafchar1"]
 
 [ext_resource type="Script" path="res://scripts/deaf_character.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://ueutfr5ncux3" path="res://assets/deaf.png" id="2_deaf"]
@@ -146,7 +146,7 @@ height = 36.0
 
 [node name="DeafCharacter" type="CharacterBody2D"]
 collision_layer = 2
-collision_mask = 3
+collision_mask = 5
 script = ExtResource("1_script")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

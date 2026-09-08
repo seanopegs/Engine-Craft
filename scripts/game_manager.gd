@@ -1,4 +1,4 @@
-﻿extends Node2D
+extends Node2D
 class_name GameManager
 
 @onready var level_loader: LevelLoader = $LevelLoader
@@ -6,6 +6,8 @@ class_name GameManager
 @onready var hud: GameHUD = $HUD
 @onready var pause_menu: PauseMenu = $PauseMenu
 @onready var game_over_popup: GameOverPopup = $GameOverPopup
+var theme_song: AudioStreamPlayer
+var theme_song_stream: AudioStream = preload("res://assets/Engine Craft Theme Song.mp3")
 
 var is_blind_active: bool = true
 var switch_cooldown_timer: float = 0.0
@@ -26,6 +28,15 @@ func _ready() -> void:
 	game_over_popup.level_select_requested.connect(_on_goto_level_select)
 	game_over_popup.main_menu_requested.connect(_on_goto_main_menu)
 	
+	# Create the level theme player once. It is restarted whenever a level starts.
+	theme_song = AudioStreamPlayer.new()
+	theme_song.name = "EngineCraftTheme"
+	theme_song.stream = theme_song_stream
+	theme_song.bus = "Master"
+	add_child(theme_song)
+	if theme_song.stream is AudioStreamMP3:
+		theme_song.stream.loop = true
+
 	start_level(Global.current_level_index)
 
 func start_level(level_idx: int) -> void:
@@ -35,6 +46,10 @@ func start_level(level_idx: int) -> void:
 	
 	Global.current_level_index = level_idx
 	Global.reset_level_state()
+
+	# Play/restart Engine-Craft theme whenever a level begins.
+	if theme_song:
+		theme_song.play()
 	
 	var file_path = Global.get_level_path(level_idx)
 	var success = level_loader.load_level_from_file(file_path)

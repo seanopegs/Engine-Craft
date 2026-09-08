@@ -1,4 +1,4 @@
-﻿extends Node
+extends Node
 
 # Procedural Audio Synthesizer for Engine-Craft
 # Generates retro 8-bit / 16-bit sound effects directly via GDScript AudioStreamWAV
@@ -37,29 +37,8 @@ func _create_wav(data: PackedByteArray, loop: bool = false) -> AudioStreamWAV:
 # --- Sound Generators ---
 
 func play_sonar_ping(high_pitch: bool = false) -> void:
-	if is_deaf_mode:
-		return
-	var duration: float = 0.35
-	var num_samples: int = int(sample_rate * duration)
-	var bytes = PackedByteArray()
-	bytes.resize(num_samples)
-	var base_freq: float = 900.0 if high_pitch else 600.0
-	
-	for i in range(num_samples):
-		var t: float = float(i) / sample_rate
-		var progress: float = float(i) / num_samples
-		var freq: float = base_freq + progress * 400.0
-		var envelope: float = exp(-progress * 7.0)
-		var val: float = sin(TAU * freq * t) * envelope
-		# Add harmonic
-		val += 0.3 * sin(TAU * (freq * 2.0) * t) * envelope
-		var byte_val: int = clampi(int((val * 0.7 + 1.0) * 127.5), 0, 255)
-		bytes[i] = byte_val
-	
-	var player = _get_player()
-	player.stream = _create_wav(bytes)
-	player.volume_db = -4.0
-	player.play()
+	# Sonar ping is intentionally disabled. The Blind character no longer has sonar.
+	return
 
 func play_step() -> void:
 	if is_deaf_mode:

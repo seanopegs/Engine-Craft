@@ -30,7 +30,7 @@ func update_hud(is_blind: bool, cooldown_remaining: float, max_cooldown: float, 
 	if is_blind:
 		char_name_label.text = "BUTA (ECHO / SOUND)"
 		char_name_label.modulate = Color(0.2, 0.9, 1.0)
-		char_desc_label.text = "Bisa Dengar Sonar [SPACE/E] | Layar Gelap"
+		char_desc_label.text = "Bisa Dengar Monster (lokasi visual) | Layar Gelap"
 		char_avatar_rect.color = Color(0.1, 0.6, 0.9)
 		darkness_overlay.visible = true
 	else:

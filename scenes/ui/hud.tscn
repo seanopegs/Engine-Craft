@@ -90,7 +90,7 @@ text = "BUTA (ECHO / SOUND)"
 layout_mode = 2
 theme_override_colors/font_color = Color(0.75, 0.8, 0.9, 1)
 theme_override_font_sizes/font_size = 12
-text = "Bisa Dengar Sonar [SPACE/E] | Layar Gelap"
+text = "Bisa Dengar Monster (lokasi visual) | Layar Gelap"
 
 [node name="CooldownBox" type="VBoxContainer" parent="TopBar/Panel/HBox"]
 custom_minimum_size = Vector2(180, 0)
@@ -190,4 +190,4 @@ offset_bottom = -10.0
 grow_vertical = 0
 theme_override_colors/font_color = Color(0.7, 0.75, 0.85, 0.8)
 theme_override_font_sizes/font_size = 13
-text = "[WASD / Panah] Gerak  |  [TAB / Q] Ganti Karakter  |  [SPACE / E] Sonar (Buta)  |  [F] Mode Follow  |  [ESC] Pause"
+text = "[WASD / Panah] Gerak  |  [TAB / Q] Ganti Karakter  |  [F] Mode Follow  |  [ESC] Pause"
