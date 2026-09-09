@@ -18,6 +18,7 @@ var key_names = {
 }
 
 var hover_timer: float = 0.0
+var collected: bool = false
 
 func _ready() -> void:
 	add_to_group("keys")
@@ -25,6 +26,8 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	hover_timer += delta * 4.0
+	for body in get_overlapping_bodies():
+		_on_body_entered(body)
 	queue_redraw()
 
 func _draw() -> void:
@@ -54,7 +57,14 @@ func _draw() -> void:
 		draw_rect(Rect2(2, offset_y + 11, 4, 3), col, true)
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.is_in_group("players"):
+	if body.is_in_group("players") and not collected:
+		if not body.is_active_character:
+			return
+		if key_type == KeyType.RED and not body is DeafCharacter:
+			return
+		if key_type == KeyType.SOUND and not body is BlindCharacter:
+			return
+		collected = true
 		var k_name = key_names[key_type]
 		Global.keys_collected[k_name] = Global.keys_collected.get(k_name, 0) + 1
 		if AudioManager:

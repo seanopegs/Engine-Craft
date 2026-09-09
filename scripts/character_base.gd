@@ -8,6 +8,8 @@ class_name CharacterBase
 
 var facing_left: bool = false
 var step_sound_timer: float = 0.0
+var follow_repath: float = 0.0
+var follow_target: Vector2
 
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
@@ -44,9 +46,12 @@ func _physics_process(delta: float) -> void:
 		# Partner Follow logic
 		if Global.is_follow_active and partner_node and is_instance_valid(partner_node):
 			var dist = global_position.distance_to(partner_node.global_position)
-			if dist > 80.0:
-				var follow_dir = (partner_node.global_position - global_position).normalized()
-				velocity = follow_dir * follow_speed
+			if dist > 28.0:
+				follow_repath -= delta
+				if follow_repath <= 0.0:
+					follow_repath = 0.12
+					follow_target = get_parent().next_follow_point(global_position, partner_node.global_position)
+				velocity = (follow_target - global_position).limit_length(follow_speed * delta) / delta
 			else:
 				velocity = Vector2.ZERO
 		else:
@@ -94,4 +99,5 @@ func _check_door_collisions() -> void:
 
 func set_active(active: bool) -> void:
 	is_active_character = active
+	follow_repath = 0.0
 	queue_redraw()

@@ -4,32 +4,21 @@ class_name MainMenu
 func _ready() -> void:
 	var ui := GameUI.canvas(self)
 	GameUI.art(ui, "backdrop", Rect2(0, 0, 1280, 720))
-	GameUI.art(ui, "echo", Rect2(52, 32, 28, 24))
-	GameUI.label(ui, "ENGINE / CRAFT", Rect2(92, 26, 240, 36), 18)
-	var build := GameUI.label(ui, "ECHO & SIGHT  /  01", Rect2(960, 31, 268, 26), 11, GameUI.MUTED)
-	build.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-
-	# One quiet card keeps the start screen focused on the game title and its actions.
-	GameUI.panel(ui, Rect2(360, 118, 560, 484), GameUI.LINE, Color("0d1822"))
-	GameUI.rule(ui, Rect2(400, 158, 480, 2), GameUI.CYAN)
-	GameUI.label(ui, "A CO-OP MAZE OF PERCEPTION", Rect2(400, 182, 480, 22), 11, GameUI.CYAN)
-	GameUI.label(ui, "ECHO & SIGHT", Rect2(400, 214, 480, 62), 46)
-	var subtitle := GameUI.paragraph(ui, "Dua karakter. Dua cara melihat dunia.\nBekerja sama untuk menemukan jalan keluar.", Rect2(400, 288, 480, 56), 16)
-	subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	GameUI.rule(ui, Rect2(440, 366, 400, 1), GameUI.LINE)
-	var play := GameUI.button(ui, "Mulai permainan   >", Rect2(470, 394, 340, 50), _on_play, true)
-	GameUI.button(ui, "Pilih level", Rect2(470, 456, 164, 44), _on_level_select)
-	GameUI.button(ui, "Cara bermain", Rect2(646, 456, 164, 44), _on_guide)
-	GameUI.label(ui, "ECHO  /  dengar yang tak terlihat", Rect2(400, 535, 230, 20), 11, GameUI.CYAN)
-	var sight := GameUI.label(ui, "SIGHT  /  lihat yang tak terdengar", Rect2(650, 535, 230, 20), 11, GameUI.GOLD)
-	sight.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	var quit := GameUI.button(ui, "Keluar", Rect2(1076, 30, 152, 36), _on_quit)
-	quit.add_theme_font_size_override("font_size", 13)
+	GameUI.label(ui, "E N G I N E   C R A F T", Rect2(88, 56, 400, 24), 12, GameUI.MUTED)
+	GameUI.label(ui, "Echo & Sight", Rect2(88, 204, 780, 94), 68)
+	GameUI.paragraph(ui, "Dua indra. Satu perjalanan.", Rect2(92, 316, 600, 36), 21)
+	var play := GameUI.button(ui, "Mulai perjalanan", Rect2(92, 412, 300, 56), _on_play, true)
+	GameUI.button(ui, "Pilih level", Rect2(92, 488, 144, 44), _on_level_select)
+	GameUI.button(ui, "Panduan", Rect2(252, 488, 140, 44), _on_guide)
+	GameUI.button(ui, "Pengaturan", Rect2(92, 550, 300, 44), func(): GameUI.open_settings(self))
+	GameUI.art(ui, "duet", Rect2(800, 220, 320, 280), GameUI.CYAN)
+	GameUI.button(ui, "Keluar", Rect2(1060, 610, 132, 44), _on_quit)
+	GameUI.label(ui, "Petualangan puzzle untuk dua karakter.", Rect2(92, 624, 650, 24), 13, GameUI.MUTED)
 	play.grab_focus()
 	GameUI.entrance(ui)
 
 func _on_play() -> void:
-	Global.current_level_index = 1
+	Global.current_level_index = mini(Global.unlocked_level, Global.max_levels)
 	get_tree().change_scene_to_file("res://scenes/game_scene.tscn")
 
 func _on_level_select() -> void:

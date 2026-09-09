@@ -31,6 +31,7 @@ var wall_body: StaticBody2D = null
 func load_level_from_file(file_path: String) -> bool:
 	# Clear previous children
 	for c in get_children():
+		remove_child(c)
 		c.queue_free()
 	wall_cells.clear()
 	floor_cells.clear()
@@ -55,6 +56,9 @@ func load_level_from_file(file_path: String) -> bool:
 			lines.append(line)
 			
 	file.close()
+	if not validate_map(lines):
+		printerr("Invalid level layout: ", file_path)
+		return false
 	
 	map_height = lines.size()
 	map_width = 0
@@ -196,6 +200,57 @@ func load_level_from_file(file_path: String) -> bool:
 	
 	queue_redraw()
 	return true
+
+func validate_map(lines: Array[String]) -> bool:
+	if lines.size() < 3:
+		return false
+	var width := lines[0].length()
+	var counts := {"A": 0, "B": 0, "P": 0, "E": 0}
+	for y in range(lines.size()):
+		if lines[y].length() != width:
+			return false
+		for x in range(width):
+			var symbol := lines[y][x]
+			if not symbol in "#. PABEMRrSsKkLOG":
+				return false
+			if (x == 0 or y == 0 or x == width - 1 or y == lines.size() - 1) and symbol != "#":
+				return false
+			if counts.has(symbol):
+				counts[symbol] += 1
+	return counts.E == 1 and ((counts.P == 1 and counts.A == 0 and counts.B == 0) or (counts.P == 0 and counts.A == 1 and counts.B == 1))
+
+func next_follow_point(from: Vector2, target: Vector2) -> Vector2:
+	var grid := AStarGrid2D.new()
+	grid.region = Rect2i(0, 0, map_width, map_height)
+	grid.cell_size = Vector2.ONE * cell_size
+	grid.offset = Vector2.ONE * cell_size / 2.0
+	grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
+	grid.update()
+	for cell in wall_cells:
+		grid.set_point_solid(cell)
+	for child in get_children():
+		if (child is MazeDoor and not child.is_open) or (child is LaserTrap and child.is_active):
+			grid.set_point_solid(Vector2i(child.position / cell_size))
+	var start := Vector2i(to_local(from) / cell_size)
+	var finish := Vector2i(to_local(target) / cell_size)
+	if not grid.is_in_boundsv(start) or not grid.is_in_boundsv(finish):
+		return from
+	grid.set_point_solid(start, false)
+	if grid.is_point_solid(finish):
+		return from
+	var path := grid.get_point_path(start, finish)
+	if path.is_empty():
+		return from
+	if path.size() > 1:
+		# Center in the corridor before turning; do not cut wall corners.
+		var center := to_global(path[0])
+		var next := to_global(path[1])
+		if absf(next.x - center.x) > 1 and absf(from.y - center.y) > 3:
+			return Vector2(from.x, center.y)
+		if absf(next.y - center.y) > 1 and absf(from.x - center.x) > 3:
+			return Vector2(center.x, from.y)
+		return next
+	return target
 
 func _draw() -> void:
 	# Draw Floor Tiles

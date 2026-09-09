@@ -33,7 +33,7 @@ func _ready() -> void:
 	theme_song.name = "EngineCraftTheme"
 	theme_song_stream = load("res://assets/Engine Craft Theme Song.mp3")
 	theme_song.stream = theme_song_stream
-	theme_song.bus = "Master"
+	theme_song.bus = "Music"
 	add_child(theme_song)
 	if theme_song.stream is AudioStreamMP3:
 		theme_song.stream.loop = true
@@ -48,6 +48,7 @@ func _exit_tree() -> void:
 	theme_song_stream = null
 
 func start_level(level_idx: int) -> void:
+	is_level_active = false
 	get_tree().paused = false
 	pause_menu.visible = false
 	game_over_popup.visible = false
@@ -63,6 +64,7 @@ func start_level(level_idx: int) -> void:
 	var success = level_loader.load_level_from_file(file_path)
 	if not success:
 		printerr("Could not load level: ", file_path)
+		game_over_popup.show_game_over("Peta level tidak valid. Kembali ke pilihan level.")
 		return
 		
 	# Start with Blind character active
@@ -72,6 +74,8 @@ func start_level(level_idx: int) -> void:
 	
 	if level_loader.blind_character:
 		camera.global_position = level_loader.blind_character.global_position
+		_update_camera(1.0)
+		camera.reset_smoothing()
 		
 	is_level_active = true
 
@@ -88,6 +92,9 @@ func _process(delta: float) -> void:
 	# Update HUD
 	if hud:
 		hud.update_hud(is_blind_active, switch_cooldown_timer, max_switch_cooldown, Global.is_follow_active, Global.current_level_index)
+		if is_blind_active:
+			var focus := level_loader.blind_character.get_global_transform_with_canvas().origin / get_viewport_rect().size
+			hud.darkness_overlay.material.set_shader_parameter("focus", focus)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if is_level_active and not get_tree().paused and event.is_action_pressed("pause") and not event.is_echo():
@@ -133,7 +140,14 @@ func _update_camera(delta: float) -> void:
 		target_pos = level_loader.deaf_character.global_position
 		
 	if target_pos != Vector2.ZERO:
-		camera.global_position = camera.global_position.lerp(target_pos, delta * 7.0)
+		var viewport := get_viewport_rect().size
+		var half := viewport / 2.0
+		var map_size := Vector2(level_loader.map_width, level_loader.map_height) * level_loader.cell_size
+		var lower := Vector2(half.x - 24, half.y - 96)
+		var upper := map_size - Vector2(half.x - 24, half.y - 116)
+		target_pos.x = clampf(target_pos.x, lower.x, upper.x) if lower.x <= upper.x else map_size.x / 2.0
+		target_pos.y = clampf(target_pos.y, lower.y, upper.y) if lower.y <= upper.y else map_size.y / 2.0 + 10
+		camera.global_position = camera.global_position.lerp(target_pos, minf(delta * 7.0, 1.0))
 
 func _toggle_pause() -> void:
 	get_tree().paused = not get_tree().paused

@@ -3,27 +3,17 @@ class_name HowToPlay
 
 func _ready() -> void:
 	var ui := GameUI.canvas(self)
-	GameUI.header(ui, "PANDUAN PENJELAJAH")
-	GameUI.label(ui, "Saling melengkapi.", Rect2(48, 112, 850, 64), 42)
-	GameUI.label(ui, "Ganti karakter, kumpulkan kunci, dan temukan portal keluar.", Rect2(50, 178, 1000, 36), 17, GameUI.MUTED)
-	var back := GameUI.button(ui, "<  Menu utama", Rect2(1000, 126, 230, 48), _on_back)
-	for i in range(2):
-		var x := 48.0 + i * 600.0
-		var color := GameUI.CYAN if i == 0 else GameUI.GOLD
-		GameUI.panel(ui, Rect2(x, 242, 584, 244), color.darkened(0.5))
-		GameUI.art(ui, "echo" if i == 0 else "sight", Rect2(x + 26, 270, 44, 44), color)
-		GameUI.label(ui, "ECHO / BUTA" if i == 0 else "SIGHT / TULI", Rect2(x + 90, 264, 440, 38), 25, color)
-		GameUI.label(ui, "ANDALKAN PENDENGARAN" if i == 0 else "ANDALKAN PENGLIHATAN", Rect2(x + 90, 304, 440, 24), 11, GameUI.MUTED)
-		GameUI.paragraph(ui, "Lokasi monster terungkap lewat suara.\nPenglihatan terbatas; laser, kunci, dan pintu tersembunyi.\nGanti ke Sight sebelum melewati jalur berbahaya." if i == 0 else "Lihat laser, kunci, dan pintu dengan jelas.\nSuara dan lokasi monster tidak dapat kamu tangkap.\nGanti ke Echo untuk mengetahui posisi pemburu.", Rect2(x + 28, 352, 528, 100), 16)
-	GameUI.panel(ui, Rect2(48, 510, 1184, 130))
-	var keys := ["WASD / PANAH", "TAB / Q", "F", "ESC"]
-	var titles := ["Bergerak", "Ganti karakter", "Ikuti / tunggu", "Jeda permainan"]
-	var notes := ["Jelajahi labirin", "Isi ulang 2,5 detik", "Tahan posisi di pelat tekan", "Lanjut, ulang, atau pilih level"]
-	for i in range(4):
-		var x := 72.0 + i * 294.0
-		GameUI.keycap(ui, keys[i], Rect2(x, 530, 122 if i == 0 else 76, 28))
-		GameUI.label(ui, titles[i], Rect2(x, 566, 266, 28), 16)
-		GameUI.label(ui, notes[i], Rect2(x, 598, 266, 24), 12, GameUI.MUTED)
+	GameUI.header(ui, "PANDUAN")
+	GameUI.label(ui, "Temukan jalan bersama.", Rect2(88, 135, 1000, 66), 44)
+	GameUI.paragraph(ui, "Bawa kedua karakter ke portal. Ganti indra untuk membaca ruang.", Rect2(92, 218, 1050, 36), 18)
+	GameUI.label(ui, "Echo", Rect2(92, 300, 480, 42), 28, GameUI.CYAN)
+	GameUI.paragraph(ui, "Mendeteksi pemburu dan mengambil kunci suara.\nGanti ke Sight untuk melihat benda dan laser.", Rect2(92, 356, 500, 88), 17)
+	GameUI.label(ui, "Sight", Rect2(688, 300, 480, 42), 28, GameUI.GOLD)
+	GameUI.paragraph(ui, "Melihat jalur dan mengambil kunci merah.\nGanti ke Echo untuk mengetahui posisi pemburu.", Rect2(688, 356, 500, 88), 17)
+	GameUI.rule(ui, Rect2(92, 466, 1100, 1))
+	GameUI.paragraph(ui, "WASD / Panah   Gerak       Tab / Q   Ganti       F   Ikuti / tunggu       Esc   Jeda", Rect2(92, 494, 1100, 36), 16)
+	GameUI.paragraph(ui, "Laser: hijau aman, kuning bersiap, merah berbahaya.\nPelat: matikan ikuti, tempatkan satu karakter di tiap pelat. Gerbang tetap terbuka.", Rect2(92, 550, 1090, 64), 15)
+	var back := GameUI.button(ui, "Kembali", Rect2(1020, 632, 172, 44), _on_back)
 	back.grab_focus()
 	GameUI.entrance(ui)
 

@@ -31,3 +31,20 @@ L  : Laser Trap (Jebakan mematikan; terlihat jelas oleh Deaf)
 O  : Pressure Plate (Tombol lantai pengaktif gerbang)
 G  : Gate / Gerbang (Membuka jika tombol O diinjak)
 ===================================================================
+
+ATURAN KAMPANYE BARU
+- Semua baris sama panjang; seluruh tepi harus #. Peta tidak valid ditolak.
+- E membutuhkan kedua karakter berada di portal bersamaan.
+- R hanya diambil Sight aktif; S hanya diambil Echo aktif; K oleh karakter aktif mana pun.
+- Kunci dibagi bersama, dikonsumsi satu kali per pintu, pintu tetap terbuka.
+- O adalah relay berpasangan: tepat dua pelat harus diinjak pemain bersamaan.
+  F mematikan ikuti untuk menahan posisi. Semua G terkunci terbuka permanen
+  setelah relay berhasil. Monster tidak dapat mengaktifkannya.
+- L: aktif merah 2 detik, aman hijau 3 detik; 0,8 detik terakhir menjadi kuning.
+  Seluruh kotak berbahaya saat merah, termasuk jika pemain diam di dalamnya.
+- Setiap pintu kampanye merupakan satu-satunya penghubung antar sektor.
+- Level 1: dua kunci dan pergantian karakter. Level 2: timing laser.
+  Level 3: arena pemburu dengan jalur mengitari pilar. Level 4: relay pasangan.
+  Level 5: relay, tiga warna pintu, laser, dan arena pemburu terakhir.
+- level_tutorial.txt adalah contoh latihan terpisah, bukan bagian pilihan 1-5.
+- Jalankan tests/verify_game.gd setelah mengedit peta (lihat tests/README.md).

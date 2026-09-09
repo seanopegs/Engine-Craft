@@ -16,6 +16,7 @@ var character_switch_cooldown: float = 2.5
 var is_follow_active: bool = true
 
 func reset_level_state() -> void:
+	is_follow_active = true
 	keys_collected = {
 		"red": 0,
 		"sound": 0,

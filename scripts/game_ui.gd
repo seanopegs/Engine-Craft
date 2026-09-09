@@ -1,16 +1,23 @@
 extends RefCounted
 class_name GameUI
 
-const INK := Color("0c1520")
-const PANEL := Color("111f2b")
-const LINE := Color("304550")
-const TEXT := Color("e3ecea")
-const MUTED := Color("91a6ad")
-const CYAN := Color("65e3d5")
-const GOLD := Color("efbc72")
+const INK := Color("101416")
+const PANEL := Color("191e20")
+const LINE := Color("303839")
+const TEXT := Color("edece6")
+const MUTED := Color("a2aaa7")
+const CYAN := Color("b8d4c5")
+const GOLD := Color("d6c7a3")
 const RED := Color("ef7f85")
 const ORNAMENT = preload("res://scripts/ui_ornament.gd")
 const LEVEL_NAMES := ["Dua Indra", "Lorong Gelap", "Sang Pemburu", "Dua Arah", "Labirin Bayangan"]
+
+static func open_settings(parent: Node) -> void:
+	if parent.has_node("SettingsMenu"):
+		return
+	var menu = load("res://scripts/settings_menu.gd").new()
+	menu.name = "SettingsMenu"
+	parent.add_child(menu)
 
 static func canvas(parent: Node) -> Control:
 	var root := Control.new()
@@ -121,13 +128,9 @@ static func portrait(parent: Node, blind: bool, rect: Rect2) -> void:
 
 static func header(root: Control, section: String) -> void:
 	art(root, "backdrop", Rect2(0, 0, 1280, 720))
-	art(root, "echo", Rect2(42, 32, 28, 24))
-	label(root, "ENGINE / CRAFT", Rect2(84, 26, 260, 36), 18)
-	var section_label := label(root, section, Rect2(870, 30, 368, 30), 12, MUTED)
+	label(root, "ECHO & SIGHT", Rect2(88, 48, 260, 36), 14)
+	var section_label := label(root, section, Rect2(870, 48, 322, 30), 12, MUTED)
 	section_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	label(root, "ECHO & SIGHT", Rect2(42, 674, 260, 25), 12, MUTED)
-	var footer := label(root, "DUA INDRA. SATU JALAN KELUAR.", Rect2(750, 674, 488, 25), 11, MUTED)
-	footer.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 
 static func entrance(node: Control) -> void:
 	node.modulate.a = 0.0
@@ -140,10 +143,8 @@ static func modal(parent: CanvasLayer, eyebrow: String, heading: String, subtitl
 	dimmer.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	parent.add_child(dimmer)
 	var root := canvas(parent)
-	panel(root, Rect2(260, 118, 760, 484))
-	rule(root, Rect2(260, 118, 760, 2), CYAN)
-	label(root, eyebrow, Rect2(300, 150, 620, 24), 12, CYAN)
-	label(root, heading, Rect2(300, 184, 620, 56), 38)
-	paragraph(root, subtitle, Rect2(300, 248, 620, 52), 15)
-	rule(root, Rect2(300, 312, 680, 1))
+	panel(root, Rect2(352, 108, 576, 528))
+	label(root, eyebrow, Rect2(400, 144, 480, 24), 11, MUTED)
+	label(root, heading, Rect2(400, 186, 480, 56), 36)
+	paragraph(root, subtitle, Rect2(400, 254, 480, 52), 15)
 	return root

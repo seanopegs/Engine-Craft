@@ -11,6 +11,9 @@ func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 
+func _process(_delta: float) -> void:
+	queue_redraw()
+
 func _draw() -> void:
 	# Objects are visible only to the Deaf character.
 	# Blind character cannot visually see objects.
@@ -25,7 +28,7 @@ func _draw() -> void:
 	draw_rect(Rect2(-24, -24, 48, 48), Color.WHITE * 0.4, false, 2.0)
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.is_in_group("players") or body.is_in_group("monsters"):
+	if body.is_in_group("players"):
 		bodies_on_plate += 1
 		if not is_pressed:
 			is_pressed = true
@@ -36,7 +39,7 @@ func _on_body_entered(body: Node2D) -> void:
 			queue_redraw()
 
 func _on_body_exited(body: Node2D) -> void:
-	if body.is_in_group("players") or body.is_in_group("monsters"):
+	if body.is_in_group("players"):
 		bodies_on_plate = maxi(0, bodies_on_plate - 1)
 		if bodies_on_plate == 0 and is_pressed:
 			is_pressed = false
@@ -45,7 +48,17 @@ func _on_body_exited(body: Node2D) -> void:
 			queue_redraw()
 
 func _update_gates(state: bool) -> void:
+	# A cooperative relay latches permanently once BOTH stations are held.
+	# Releasing one station cannot trap the other character behind a gate.
+	if not state:
+		return
+	var plates := get_tree().get_nodes_in_group("pressure_plates")
+	if plates.size() < 2:
+		return
+	for plate in plates:
+		if not plate.is_pressed:
+			return
 	var gates = get_tree().get_nodes_in_group("doors")
 	for g in gates:
 		if g.has_method("set_gate_open"):
-			g.set_gate_open(state)
+			g.set_gate_open(true)

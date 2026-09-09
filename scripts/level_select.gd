@@ -3,27 +3,24 @@ class_name LevelSelect
 
 func _ready() -> void:
 	var ui := GameUI.canvas(self)
-	GameUI.header(ui, "PETA PERJALANAN")
-	GameUI.label(ui, "Pilih langkah berikutnya.", Rect2(48, 120, 900, 60), 42)
-	GameUI.label(ui, "Lima labirin. Saling percaya adalah kunci untuk melangkah lebih jauh.", Rect2(50, 190, 1000, 36), 17, GameUI.MUTED)
-	var details := ["Kenali Echo dan Sight.\nPelajari cara saling melengkapi.", "Baca warna. Hindari laser.\nJangan melangkah tanpa arah.", "Dengarkan langkah pemburu.\nBahaya tak selalu terlihat.", "Atur posisi pasangan.\nBuka jalan dengan kerja sama.", "Satukan semua kemampuan.\nTemukan pintu keluar terakhir."]
-	var first: Button
+	GameUI.header(ui, "PERJALANAN")
+	GameUI.label(ui, "Pilih level", Rect2(88, 174, 370, 64), 46)
+	GameUI.paragraph(ui, "Setiap ruang meminta\ncara berpikir yang berbeda.", Rect2(92, 262, 350, 90), 18)
+	GameUI.button(ui, "Kembali", Rect2(92, 548, 172, 48), _on_back)
+	var details := ["Kunci warna dan suara", "Baca jeda laser", "Lewati wilayah pemburu", "Aktifkan dua pelat bersama", "Rangkaian terakhir"]
 	for i in range(5):
-		var x := 48.0 + i * 240.0
-		var unlocked: bool = i + 1 <= Global.unlocked_level
-		var accent := GameUI.CYAN if unlocked else GameUI.MUTED.darkened(0.4)
-		GameUI.panel(ui, Rect2(x, 278, 224, 318), accent.darkened(0.5))
-		GameUI.rule(ui, Rect2(x + 20, 300, 40, 3), accent)
-		GameUI.label(ui, "%02d" % (i + 1), Rect2(x + 20, 328, 184, 74), 58, accent)
-		GameUI.label(ui, GameUI.LEVEL_NAMES[i], Rect2(x + 20, 419, 184, 32), 19)
-		GameUI.paragraph(ui, details[i], Rect2(x + 20, 462, 184, 60), 13)
+		var y := 150.0 + i * 94.0
+		var unlocked := i + 1 <= Global.unlocked_level
+		GameUI.label(ui, "%02d" % (i + 1), Rect2(526, y + 6, 50, 28), 18, GameUI.MUTED)
+		GameUI.label(ui, GameUI.LEVEL_NAMES[i], Rect2(594, y, 370, 34), 23, GameUI.TEXT if unlocked else GameUI.MUTED)
+		GameUI.label(ui, details[i], Rect2(594, y + 37, 370, 24), 13, GameUI.MUTED)
 		var index := i + 1
-		var btn := GameUI.button(ui, "Masuk labirin  >" if unlocked else "Terkunci", Rect2(x + 16, 536, 192, 44), func(): _start_level(index), unlocked)
+		var btn := GameUI.button(ui, "Main" if unlocked else "Terkunci", Rect2(1030, y + 4, 162, 46), func(): _start_level(index))
 		btn.disabled = not unlocked
 		if i == 0:
-			first = btn
-	GameUI.button(ui, "<  Menu utama", Rect2(1000, 130, 230, 48), _on_back)
-	first.grab_focus()
+			btn.grab_focus()
+		if i < 4:
+			GameUI.rule(ui, Rect2(526, y + 78, 666, 1), GameUI.LINE)
 	GameUI.entrance(ui)
 
 func _start_level(idx: int) -> void:

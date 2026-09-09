@@ -14,9 +14,15 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	for i in range(_max_players):
 		var p = AudioStreamPlayer.new()
-		p.bus = "Master"
+		p.bus = "SFX"
 		add_child(p)
 		_players.append(p)
+
+func _exit_tree() -> void:
+	for player in _players:
+		player.stop()
+		player.stream = null
+	_players.clear()
 
 func _get_player() -> AudioStreamPlayer:
 	var p = _players[_current_player_idx]

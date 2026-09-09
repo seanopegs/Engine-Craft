@@ -32,16 +32,14 @@ func _draw() -> void:
 		draw_line(Vector2(size.x * 0.48, c.y), Vector2(size.x * 0.86, c.y), accent, 2.0, true)
 		draw_line(Vector2(size.x * 0.75, c.y), Vector2(size.x * 0.75, c.y + 5), accent, 2.0, true)
 	elif mode == "backdrop":
-		draw_rect(Rect2(Vector2.ZERO, size), Color("090f19"))
-		for x in range(0, int(size.x), 56):
-			draw_line(Vector2(x, 0), Vector2(x, size.y), Color(0.18, 0.3, 0.36, 0.12))
-		for y in range(0, int(size.y), 56):
-			draw_line(Vector2(0, y), Vector2(size.x, y), Color(0.18, 0.3, 0.36, 0.12))
-		for i in range(65):
-			var p := Vector2(fmod(i * 193.0 + 23, size.x), fmod(i * 97.0 + 47, size.y))
-			draw_circle(p, 1.0, Color(0.4, 0.8, 0.75, 0.12 + 0.08 * sin(phase + i)))
-		draw_line(Vector2(40, 88), Vector2(size.x - 40, 88), Color("263c47"))
-		draw_line(Vector2(40, size.y - 54), Vector2(size.x - 40, size.y - 54), Color("263c47"))
+		draw_rect(Rect2(Vector2.ZERO, size), Color("101416"))
+	elif mode == "duet":
+		var left := c - Vector2(45, 0)
+		var right := c + Vector2(45, 0)
+		draw_arc(left, 92, 0, TAU, 100, Color(0.72, 0.83, 0.77, 0.25), 1.5, true)
+		draw_arc(right, 92, 0, TAU, 100, Color(0.84, 0.78, 0.64, 0.25), 1.5, true)
+		draw_circle(left, 7, accent)
+		draw_circle(right, 7, Color("d6c7a3"))
 	elif mode == "maze":
 		var origin := Vector2(30, 25)
 		var cell := 44.0

@@ -4,9 +4,10 @@
 
 [sub_resource type="Shader" id="Shader_vignette"]
 code = "shader_type canvas_item;
+uniform vec2 focus = vec2(0.5);
 
 void fragment() {
-    vec2 uv = UV - vec2(0.5);
+    vec2 uv = UV - focus;
     float dist = length(uv);
     float vignette = smoothstep(0.18, 0.75, dist);
     COLOR = vec4(0.02, 0.02, 0.05, vignette * 0.95);
