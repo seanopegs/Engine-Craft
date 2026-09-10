@@ -12,7 +12,7 @@ func _ready() -> void:
 	GameUI.paragraph(ui, "Melihat jalur dan mengambil kunci merah.\nGanti ke Echo untuk mendeteksi pemburu.", Rect2(688, 356, 500, 88), 17)
 	GameUI.rule(ui, Rect2(92, 466, 1100, 1))
 	GameUI.paragraph(ui, "WASD / Panah   Gerak       Tab / Q   Ganti       F   Ikuti / tunggu       Esc   Jeda", Rect2(92, 494, 1100, 36), 16)
-	GameUI.paragraph(ui, "Laser merah berbahaya.\nPelat: matikan ikuti, tempatkan satu karakter di tiap pelat. Gerbang tetap terbuka.", Rect2(92, 550, 1090, 64), 15)
+	GameUI.paragraph(ui, "Pemburu tak kasat mata, sehingga hanya bisa terdengar dan tidak terlihat.\nPelat: matikan ikuti, tempatkan satu karakter di tiap pelat. Gerbang tetap terbuka.", Rect2(92, 550, 1090, 64), 15)
 	var back := GameUI.button(ui, "Kembali", Rect2(1020, 632, 172, 44), _on_back)
 	back.grab_focus()
 	GameUI.entrance(ui)

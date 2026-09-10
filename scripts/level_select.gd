@@ -7,7 +7,7 @@ func _ready() -> void:
 	GameUI.label(ui, "Pilih level", Rect2(88, 174, 370, 64), 46)
 	GameUI.paragraph(ui, "Setiap ruang meminta\ncara berpikir yang berbeda.", Rect2(92, 262, 350, 90), 18)
 	GameUI.button(ui, "Kembali", Rect2(92, 548, 172, 48), _on_back)
-	var details := ["Kunci warna dan suara", "Baca jeda laser", "Lewati wilayah pemburu", "Aktifkan dua pelat bersama", "Rangkaian terakhir"]
+	var details := ["Kunci warna dan suara", "Hindari jebakan laser", "Lewati wilayah pemburu", "Aktifkan dua pelat bersama", "Rangkaian terakhir"]
 	for i in range(5):
 		var y := 150.0 + i * 94.0
 		var unlocked := i + 1 <= Global.unlocked_level
