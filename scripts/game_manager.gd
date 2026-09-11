@@ -164,7 +164,9 @@ func _on_next_level() -> void:
 	if Global.current_level_index < Global.max_levels:
 		start_level(Global.current_level_index + 1)
 	else:
-		_on_goto_level_select()
+		get_tree().paused = false
+		Global.story_is_epilogue = true
+		get_tree().change_scene_to_file("res://scenes/story.tscn")
 
 func _on_goto_level_select() -> void:
 	get_tree().paused = false

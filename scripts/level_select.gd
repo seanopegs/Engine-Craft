@@ -24,8 +24,7 @@ func _ready() -> void:
 	GameUI.entrance(ui)
 
 func _start_level(idx: int) -> void:
-	Global.current_level_index = idx
-	get_tree().change_scene_to_file("res://scenes/game_scene.tscn")
+	Global.enter_level(idx)
 
 func _on_back() -> void:
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")

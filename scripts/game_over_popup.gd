@@ -30,11 +30,13 @@ func show_win(level_idx: int) -> void:
 	title_label.add_theme_color_override("font_color", GameUI.CYAN)
 	message_label.text = "Labirin %02d berhasil dilewati. Perjalanan kalian belum berakhir." % level_idx
 	status_label.text = "LABIRIN %02d / SELESAI" % level_idx
-	next_level_btn.visible = level_idx < Global.max_levels
+	next_level_btn.visible = true
 	next_level_btn.text = "Masuk labirin %02d  >" % (level_idx + 1)
 	retry_btn.position.y = 404 if next_level_btn.visible else 350
 	if level_idx == Global.max_levels:
-		message_label.text = "Lima labirin, dua indra, satu kemenangan. Kalian berhasil!"
+		title_label.text = "Kalian keluar bersama."
+		message_label.text = "Lorong terakhir terlewati. Setelah evakuasi berakhir, perjalanan baru kalian dimulai."
+		next_level_btn.text = "Lihat akhir perjalanan  >"
 	visible = true
 	if next_level_btn.visible:
 		next_level_btn.grab_focus()
