@@ -2,13 +2,13 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-uid="uid://enginecraftfirstsong01"
-path="res://.godot/imported/Engine Craft Theme - First Song.mp3-a1b2c3d4e5f67890.mp3str"
+uid="uid://c23x5rlvgycrc"
+path="res://.godot/imported/Engine Craft Theme - First Song.mp3-50cea80f8097fbc506a4522d7696600b.mp3str"
 
 [deps]
 
 source_file="res://assets/Engine Craft Theme - First Song.mp3"
-dest_files=["res://.godot/imported/Engine Craft Theme - First Song.mp3-a1b2c3d4e5f67890.mp3str"]
+dest_files=["res://.godot/imported/Engine Craft Theme - First Song.mp3-50cea80f8097fbc506a4522d7696600b.mp3str"]
 
 [params]
 
